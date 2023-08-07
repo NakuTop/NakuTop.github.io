@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>致我最爱的老婆</title>
+    <title>给我最爱的老婆季节看嘟</title>
     <style>
         @font-face {
             font-family: 'Yuanti SC';
@@ -56,13 +56,31 @@
                 top: 100%;
             }
         }
+        /* Styling the button to match the overall style */
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: orange;
+            color: black;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Yuanti SC', sans-serif; /* Yuanti SC font */
+            font-weight: bold; /* Bold */
+        }
+        button:hover {
+            background-color: darkorange;
+        }
     </style>
 </head>
 <body>
     <div id="main-content">
-        <div id="timer" onclick="generateHearts()">已经过去的时间: <span id="elapsed-time"></span></div>
-        <img id="uploaded-image" src="https://raw.githubusercontent.com/NakuTop/NakuTop.github.io/main/image0.png" alt="Uploaded Image" onclick="generateHearts()">
+        <div id="timer" onclick="generateHearts()">已经跟宝宝季节甜蜜: <span id="elapsed-time"></span></div>
+        <img id="uploaded-image" src="image0.jpg" alt="Uploaded Image" onclick="generateHearts()">
         <a id="link-btn" href="https://photos.app.goo.gl/V3wHJ2jqknKxuPtH9" target="_blank">查看相册</a>
+        <button onclick="promptForMusicSelection()">选择背景音乐</button> <!-- Styled button for music selection -->
+    </div>
     </div>
     <script>
         function calculateElapsedTime() {
@@ -75,7 +93,7 @@
             const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
             const days = Math.floor(duration / (1000 * 60 * 60 * 24));
 
-            return `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+            return `${days}days ${hours}hours ${minutes}minutes ${seconds}secs噜`;
         }
 
         setInterval(function() {
@@ -97,6 +115,16 @@
                 }, i * 100);
             }
         }
+        // 用户选择音乐的函数
+        function promptForMusicSelection() {
+            const userChoice = prompt("你开声音了么,这边不建议您开声音听背景乐哦，回复：“我就是天生反骨”。挑战E人极限。或者回复：“偷偷甜蜜蜜”，独享这个moment", "偷偷甜蜜蜜");
+            const audioElement = new Audio();
+            if (userChoice === "我就是天生反骨") {
+                audioElement.src = "不重要.mp3"; // 如果您选择了A，它将播放musicA.mp3
+            } else if (userChoice === "偷偷甜蜜蜜") {
+                audioElement.src = "也不重要.mp3"; // 如果您选择了B，它将播放musicB.mp3
+            }
+            audioElement.play();
+        }
     </script>
-</body>
 </html>
