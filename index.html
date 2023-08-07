@@ -73,6 +73,93 @@
             background-color: darkorange;
         }
     </style>
+    <script type="text/javascript">
+
+    // Click effect
+    let create_effect = function(e){
+        let anim;
+        let increase = 0;
+        let word_or_emoji = document.createElement("b");
+        word_or_emoji.style.color = "#E94F06";
+        word_or_emoji.style.zIndex = 9999;
+        word_or_emoji.style.position = "fixed";
+        word_or_emoji.style.userSelect = "none";
+        let x = e.clientX;
+        let y = e.clientY;
+        word_or_emoji.style.left = (x-10)+ "px";
+        word_or_emoji.style.top = (y-15) + "px";
+        word_or_emoji.style.fontSize = "20px";
+
+        // Randomly select "尊嘟" or "假嘟"
+        if (Math.random() < 0.5) {
+            word_or_emoji.innerText = "尊嘟";
+        } else {
+            word_or_emoji.innerText = "假嘟";
+        }
+
+        clearInterval(anim);
+        let $body = document.getElementsByTagName("body")[0];
+        $body.appendChild(word_or_emoji);
+
+        anim = setInterval(function(){
+            if (word_or_emoji.innerText === "假嘟" && increase == 75) {
+                clearInterval(anim);
+                $body.removeChild(word_or_emoji);
+                return;
+            } else if (word_or_emoji.innerText === "尊嘟" && increase == 75) {
+                word_or_emoji.innerText = "❤️";
+                word_or_emoji.style.fontSize = "24px";
+            }
+            if (++increase == 150){
+                clearInterval(anim);
+                $body.removeChild(word_or_emoji);
+            }
+            word_or_emoji.style.top = (y-15) - increase + "px";
+            word_or_emoji.style.opacity = (150 - increase) / 120;
+        }, 10);
+    };
+
+    // Create multiple emojis
+    let create_emojis = function(e) {
+        let emojis = ["", ""];
+        for (let i = 0; i < 10; i++) {
+            let emoji = document.createElement("b");
+            emoji.style.color = "#E94F06";
+            emoji.style.zIndex = 9999;
+            emoji.style.position = "fixed";
+            emoji.style.userSelect = "none";
+            let x = e.clientX + (Math.random() * 40 - 20);
+            let y = e.clientY + (Math.random() * 40 - 20);
+            emoji.style.left = (x-10)+ "px";
+            emoji.style.top = (y-15) + "px";
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            emoji.style.fontSize = Math.random() * 10 + 8 + "px";
+            let $body = document.getElementsByTagName("body")[0];
+            $body.appendChild(emoji);
+
+            let increase = 0;
+            let anim = setInterval(function(){
+                if (++increase == 150){
+                    clearInterval(anim);
+                    $body.removeChild(emoji);
+                }
+                emoji.style.top = (y-15) - increase + "px";
+                emoji.style.opacity = (150 - increase) / 120;
+            }, 10);
+        }
+    };
+
+    (function() {
+        let $html = document.getElementsByTagName("html")[0];
+
+        $html.onclick = function(e) {
+            create_effect(e);
+            create_emojis(e);
+        }
+    })();
+
+    </script>
+
 </head>
 <body>
     <div id="main-content">
