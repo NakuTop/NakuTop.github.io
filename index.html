@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>致我最爱的老婆</title>
+    <style>
+        @font-face {
+            font-family: 'Yuanti SC';
+            src: url('https://fonts.gstatic.com/ea/yuanti/v3/YuantiSC-Regular.woff2') format('woff2');
+        }
+        body {
+            background-color: black;
+            color: orange;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #main-content {
+            margin: 50px;
+        }
+        #timer {
+            font-size: 32px; /* Increased font size */
+            margin: 20px 0;
+            cursor: pointer;
+            font-family: 'Yuanti SC', sans-serif; /* Yuanti SC font */
+            font-weight: bold; /* Bold */
+        }
+        #uploaded-image {
+            max-width: 40%; /* Reduced to half of the original */
+            height: auto;
+            cursor: pointer; /* Cursor change on hover */
+        }
+        #link-btn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: orange;
+            color: black;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        #link-btn:hover {
+            background-color: darkorange;
+        }
+        .heart {
+            position: fixed;
+            z-index: 9999;
+            font-size: 24px;
+            color: red;
+            animation: fall 5s linear forwards;
+        }
+        @keyframes fall {
+            from {
+                top: 0%;
+            }
+            to {
+                top: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main-content">
+        <div id="timer" onclick="generateHearts()">已经过去的时间: <span id="elapsed-time"></span></div>
+        <img id="uploaded-image" src="/mnt/data/image0.jpg" alt="Uploaded Image" onclick="generateHearts()">
+        <a id="link-btn" href="https://photos.app.goo.gl/V3wHJ2jqknKxuPtH9" target="_blank">查看相册</a>
+    </div>
+    <script>
+        function calculateElapsedTime() {
+            const startDate = new Date('2023-05-01T13:17:36');
+            const now = new Date();
+            const duration = now - startDate;
+
+            const seconds = Math.floor((duration / 1000) % 60);
+            const minutes = Math.floor((duration / (1000 * 60)) % 60);
+            const hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+            const days = Math.floor(duration / (1000 * 60 * 60 * 24));
+
+            return `${days}天 ${hours}小时 ${minutes}分钟 ${seconds}秒`;
+        }
+
+        setInterval(function() {
+            document.getElementById('elapsed-time').textContent = calculateElapsedTime();
+        }, 1000);
+
+        function generateHearts() {
+            const emojis = ["❤️", "🍆"]; // Added 🍆 emoji
+            for (let i = 0; i < 10; i++) {
+                setTimeout(function() {
+                    const emoji = document.createElement("div");
+                    emoji.className = "heart";
+                    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)]; // Randomize between ❤️ and 🍆
+                    emoji.style.left = Math.random() * window.innerWidth + 'px';
+                    document.body.appendChild(emoji);
+                    setTimeout(function() {
+                        emoji.remove();
+                    }, 5000);
+                }, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
